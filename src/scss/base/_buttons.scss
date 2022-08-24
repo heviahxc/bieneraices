@@ -1,0 +1,13 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+.button-yellow{
+    @include m.button(v.$amarillo, inline-block);
+}
+.button-yellow-block{
+    @include m.button(v.$amarillo, block);
+}
+
+.button-green{
+    @include m.button(v.$verde, inline-block);
+}
+
