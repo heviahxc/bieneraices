@@ -2,7 +2,7 @@
 .footer{
     padding: calc(v.$separacion / 2) ;
     background-color: v.$grisOscuro;
-
+    margin-bottom: 0;
     .container-footer{
         padding-top: calc(v.$separacion / 2);
     }
