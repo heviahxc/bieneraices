@@ -1,0 +1,48 @@
+@use 'base/variables' as v;
+
+.dark-mode{
+    background-color: darken(v.$grisOscuro, 10);
+
+    p{
+        color: v.$blanco;
+    }
+
+    a,h1,h2,h3,h4{
+        color: v.$gris; 
+    }
+
+    .advertisements,
+    .abstract-property{
+        background-color: v.$grisOscuro;
+        border: 1px solid v.$grisOscuro;
+
+        .price{
+            color: v.$verde;
+        }
+
+        .icon{
+            filter: invert(100%);
+        }
+    }
+
+    .text-we blockquote{
+        color: v.$blanco;
+    }
+
+   .form{
+    label,
+    legend,
+    p{
+        color: v.$gris;
+    }
+
+    input:not([type="submit"]),
+    textarea,
+    select{
+        background-color: v.$grisOscuro;
+        border: 1px solid v.$grisOscuro;
+        color: v.$blanco;
+    }
+   }
+}
+
