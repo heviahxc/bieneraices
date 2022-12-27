@@ -1,37 +1,9 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="build/css/app.css">
-</head>
-<body>
+<?php
 
-    <header class="header start">
-        <div class="container contents-header">
-            <div class="bar">
-                <a href="/">
-                <img src="build/img/logo.svg" alt="logo">
-            </a>
+require 'includes/functions.php';
 
-            <div class="mobile-menu">
-            <img src="build/img/barras.svg" alt="icono menu responsive">
-                
-            </div>
-            <div class="right">
-                <img class=dark-mode-button src="build/img/dark-mode.svg" alt="darkmode">
-            <nav class="navigation">
-                <a href="we.html">Nosotros</a>
-                <a href="advertisements.html">Anuncios</a>
-                <a href="blog.html">Blog</a>
-                <a href="contact.html">Contacto</a>
-            </nav>
-        </div>
-            </div><!--cierre barra-->
-            <h1>Venta de Casas y Departamentos Exlusivos de Lujo</h1>
-        </div>
-    </header>
+    incluirTemplate('header', $start = true);
+?>
 
     <main class="container section">
         <h1>Más Sobre Nosotros</h1>
@@ -258,18 +230,6 @@
         </section>
     </div>
 
-    <footer class="footer section">
-        <div class="container container-footer">
-            <nav class="navigation">
-                <a href="we.html">Nosotros</a>
-                <a href="advertisements.html">Anuncios</a>
-                <a href="blog.html">Blog</a>
-                <a href="contact.html">Contacto</a>
-            </nav>
-        </div>
-        <p class="copyright">Todos los derechos reservados 2022 &copy;</p>
-    </footer>
-
-    <script src="build/js/bundle.min.js"></script>
-</body>
-</html>
+    <?php
+    incluirTemplate('footer');
+?>
