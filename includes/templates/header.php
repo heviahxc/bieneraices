@@ -12,15 +12,15 @@
         <div class="container contents-header">
             <div class="bar">
                 <a href="/"> <!--bienesraices/index.php -->
-                <img src="build/img/logo.svg" alt="logo">
+                <img src="/build/img/logo.svg" alt="logo">
             </a>
 
             <div class="mobile-menu">
-            <img src="build/img/barras.svg" alt="icono menu responsive">
+            <img src="/build/img/barras.svg" alt="icono menu responsive">
                 
             </div>
             <div class="right">
-                <img class=dark-mode-button src="build/img/dark-mode.svg" alt="darkmode">
+                <img class=dark-mode-button src="/build/img/dark-mode.svg" alt="darkmode">
             <nav class="navigation">
                 <a href="we.php">Nosotros</a>
                 <a href="advertisements.php">Anuncios</a>
