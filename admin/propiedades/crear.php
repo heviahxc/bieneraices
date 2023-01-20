@@ -13,23 +13,26 @@
  $wc = '';
  $estacionamientos = '';
  $vendedorId = '';
- 
+
 
  require '../../includes/functions.php';
  incluirTemplate('header');
 
  if($_SERVER ['REQUEST_METHOD'] === 'POST'){
+
+
     //echo "<pre>";
     //var_dump ($_POST);
     //echo "</prev>";
-    $title = $_POST['title'];
-    $precio = $_POST['price'];
-    $descripcion = $_POST['desc'];
-    $habitaciones = $_POST['habitaciones'];
-    $wc = $_POST['wc'];
-    $estacionamientos = $_POST['estacionamientos'];
-    $vendedorId = $_POST['vendedor'];
+    $title = mysqli_real_escape_string($db, $_POST['title']);
+    $precio = mysqli_real_escape_string($db, $_POST['price']);
+    $descripcion = mysqli_real_escape_string($db, $_POST['desc']);
+    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
+    $wc = mysqli_real_escape_string($db, $_POST['wc']);
+    $estacionamientos = mysqli_real_escape_string($db, $_POST['estacionamientos']);
+    $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
     $creado = date('Y/m/d');
+    $imagen = $_FILES['imagen'];
 
     if(!$title){
         $errores[] = "Debes añadir un titulo";
@@ -58,11 +61,30 @@
     if(!$vendedorId){
         $errores[] = "Debes elegir un vendedor";
     }
+    if (!$imagen['name'] || $imagen['error']) {
+        $errores[] = "La imagen es obligatoria";
+    }
 
+    $medida = 1000 * 1000;
+
+    if ($imagen['size']> $medida) {
+        $errores[] = "La imagen es muy pesada";
+    }
     
     if(empty($errores)){
-        $query = " INSERT INTO propiedad (titulo, precio, descripcion, habitaciones, wc , estacionamientos, creado, id_vendedor)
-        VALUES ('$title', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamientos', '$creado' ,'$vendedorId')";
+
+        $carpetaImagenes = '../../imagenes/';
+
+        if (!is_dir($carpetaImagenes)) {
+            mkdir($carpetaImagenes);
+        }
+
+        $nombreImagen = md5( uniqid(rand(), true)) . ".png";
+        
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+       
+        $query = " INSERT INTO propiedad (titulo, precio, imagen, descripcion, habitaciones, wc , estacionamientos, creado, id_vendedor)
+        VALUES ('$title', '$precio','$nombreImagen','$descripcion', '$habitaciones', '$wc', '$estacionamientos', '$creado' ,'$vendedorId')";
     
        // echo $query;
     
@@ -88,7 +110,7 @@
                 <?php echo $error ?>
             </div>
             <?php endforeach ?>
-        <form class="form" method="POST" action="/admin/propiedades/crear.php"> 
+        <form class="form" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data"> 
             <fieldset>
 
             
@@ -99,8 +121,8 @@
         <label for="price">Precio:</label>
         <input type="numbrer" id="price" name="price" placeholder="Precio Propiedad" value="<?php echo $precio;?>">
 
-        <label for="image">Imagen:</label>
-        <input type="file" id="image" name="image" accept="image/jpeg, image/png" >
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png" >
 
         <label for="desc">Descripcion:</label>
         <textarea name="desc" id="desc"><?php echo $descripcion;?></textarea>
@@ -110,13 +132,13 @@
             <legend>Información de la propiedad</legend>
 
          <label for="habitaciones">Habitaciones:</label>
-        <input type="numbrer" id="habitaciones" name="habitaciones" placeholder="Ej: 3" min="1" max="9" value="<?php echo $habitaciones;?>">
+        <input type="number" id="habitaciones" name="habitaciones" placeholder="Ej: 3" min="1" max="9" value="<?php echo $habitaciones;?>">
 
         <label for="wc">Baños:</label>
-        <input type="numbrer" id="wc" name="wc" placeholder="Ej: 2" min="1" max="9" value="<?php echo $wc;?>">
+        <input type="number" id="wc" name="wc" placeholder="Ej: 2" min="1" max="9" value="<?php echo $wc;?>">
 
         <label for="estacionamientos">Estacionamientos:</label>
-        <input type="numbrer" id="estacionamientos" name="estacionamientos" placeholder="Ej: 1" min="1" max="9" value="<?php echo $estacionamientos;?>">
+        <input type="number" id="estacionamientos" name="estacionamientos" placeholder="Ej: 1" min="1" max="9" value="<?php echo $estacionamientos;?>">
         </fieldset>
 
         <fieldset>
