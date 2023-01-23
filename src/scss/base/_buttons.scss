@@ -11,6 +11,13 @@
     @include m.button(v.$verde, inline-block);
 }
 
+.button-rojo-block{
+    @include m.button(v.$rojo, block)
+}
+.button-verde-block{
+    @include m.button(v.$verde, block)
+}
+
 .allbutton{
     padding-bottom: 1rem;
 }
