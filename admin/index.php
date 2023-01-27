@@ -11,6 +11,31 @@ $db = conectarDB();
 $query = "SELECT * FROM propiedad";
 $resultadoConsulta = mysqli_query($db, $query);
 $resultado = $_GET['resultado'] ?? null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+
+    if ($id) {
+        $query = "SELECT imagen FROM propiedad WHERE id_propiedad = ${id}";
+
+        $resultado = mysqli_query($db, $query);
+        $propiedad = mysqli_fetch_assoc($resultado);
+
+        unlink('../imagenes/' . $propiedad['imagen']);
+
+        $query = "DELETE FROM propiedad WHERE id_propiedad = ${id}";
+        $resultado = mysqli_query($db, $query);
+        
+        if ($resultado) {
+            header('Location: /admin?resultado=3');
+        }
+    }
+}
+
+
+
+
  require '../includes/functions.php';
  incluirTemplate('header');
 
@@ -22,6 +47,8 @@ $resultado = $_GET['resultado'] ?? null;
             <p class="alert exito">Anuncio creado correctamente</p>
         <?php elseif (intval($resultado) === 2): ?>
             <p class="alert exito">Anuncio actualizado correctamente</p>
+            <?php elseif (intval($resultado) === 3): ?>
+            <p class="alert exito">Anuncio Eliminado correctamente</p>
         
         <?php endif; ?>
         <a href="/admin/propiedades/crear.php" class="button button-green">Nueva Propiedad</a>
@@ -44,8 +71,13 @@ $resultado = $_GET['resultado'] ?? null;
                     <td><img src="/imagenes/<?php echo $propiedad['imagen']; ?>" class="imagen-tabla" alt=""></td>
                     <td><?php echo $propiedad['precio']; ?></td>
                     <td>
-                        <a href="" class="button-rojo-block">Eliminar</a>
-                        <a href="propiedades/actualizar.php?id=<?php echo $propiedad['id_propiedad']; ?>" 
+                        <form method="POST" class="w-100">
+
+                            <input type="hidden" name="id" value="<?php echo $propiedad['id_propiedad']; ?>">
+
+                            <input type="submit" class="button-rojo-block" value="Eliminar">
+                        </form>
+                        <a href="admin/propiedades/actualizar.php?id=<?php echo $propiedad['id_propiedad']; ?>" 
                         class="button-yellow-block">Actualizar</a>
                     </td>
                 </tr>

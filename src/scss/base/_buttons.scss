@@ -12,10 +12,11 @@
 }
 
 .button-rojo-block{
-    @include m.button(v.$rojo, block)
+    @include m.button(v.$rojo, block);
+    width: 100%;
 }
 .button-verde-block{
-    @include m.button(v.$verde, block)
+    @include m.button(v.$verde, block);
 }
 
 .allbutton{
