@@ -1,5 +1,5 @@
 <?php
-require 'includes/config/database.php';
+require 'includes/app.php';
 $db = conectarDB();
 
 $errores = [];
@@ -45,7 +45,7 @@ session_start();
    
 }
 
-require 'includes/functions.php';
+
 
 incluirTemplate('header');
 

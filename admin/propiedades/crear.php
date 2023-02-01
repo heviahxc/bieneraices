@@ -1,12 +1,14 @@
 <?php
-require '../../includes/functions.php';
+require '../../includes/app.php';
 
-$auth = autenticacion();
+use App\Propiedad;
 
-if (!$auth) {
-    header('Location: /');
-}
- require '../../includes/config/database.php';
+$propiedad = new Propiedad();
+
+autenticacion();
+
+
+
  $db = conectarDB();
  $consulta = "SELECT * FROM VENDEDORES";
  $resultado = mysqli_query($db,$consulta);
@@ -26,7 +28,8 @@ if (!$auth) {
 
  if($_SERVER ['REQUEST_METHOD'] === 'POST'){
 
-
+    $propiedad = new Propiedad($_POST);
+    $propiedad->save();
     //echo "<pre>";
     //var_dump ($_POST);
     //echo "</prev>";
@@ -152,7 +155,7 @@ if (!$auth) {
         <fieldset>
             <legend>Vendedor</legend>
 
-            <select name="vendedor">
+            <select name="id_vendedor">
                 <option value="">-- Seleccione --</option>
                 <?php while($vendedor = mysqli_fetch_assoc($resultado)): ?>
                 <option <?php echo $vendedorId === $vendedor['id_vendedor'] ? 'selected' : ''; ?>

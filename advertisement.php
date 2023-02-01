@@ -6,7 +6,7 @@ if(!$id){
     header('Location: /');
 }
 
-include 'includes/config/database.php';
+require 'includes/app.php';
 $db = conectarDB();
 
 $query = "SELECT * FROM propiedad where ${id}";
@@ -14,7 +14,7 @@ $query = "SELECT * FROM propiedad where ${id}";
 $resultado = mysqli_query($db, $query);
 
 
-require 'includes/functions.php';
+
 
     incluirTemplate('header');
 ?>

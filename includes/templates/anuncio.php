@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../config/database.php';
+
 $db = conectarDB();
 
 $query = "SELECT * FROM propiedad LIMIT ${limite}";

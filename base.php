@@ -1,6 +1,6 @@
 <?php
 
-require 'includes/functions.php';
+require 'includes/app.php';
 
 incluirTemplate('header');
 
