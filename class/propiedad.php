@@ -6,6 +6,12 @@ class Propiedad{
 
     protected static $db;
     protected static $columnasDB = ['id_propiedad', 'titulo', 'precio', 'imagen', 'descripcion', 'habitaciones', 'wc', 'estacionamientos', 'id_vendedor'];
+
+    protected static $errores = [];
+
+
+
+
     public $id_propiedad;
     public $titulo;
     public $precio;
@@ -37,12 +43,15 @@ class Propiedad{
 
         $atributos = $this->sanitizarAtributos();
 
-        $query = " INSERT INTO propiedad (titulo, precio, imagen, descripcion, habitaciones, wc , estacionamientos, creado, id_vendedor)
-        VALUES ('$this->titulo', '$this->precio','$this->imagen','$this->descripcion', '$this->habitaciones', '$this->wc', '$this->estacionamientos', '$this->creado' ,'$this->id_vendedor')";
+        $query = " INSERT INTO propiedad (";
+        $query .= join(',', array_keys($atributos));
+        $query .= ") VALUES ( '"; 
+        $query .= join("','", array_values($atributos));
+        $query.= "')";
 
         $resultado = self::$db->query($query);
 
-
+        return $resultado;
     }
     public function atributos(){
         $atributos = [];
@@ -63,5 +72,53 @@ class Propiedad{
 
         return $sanitizado;
     }
+
+    public function setImagen($imagen){
+        if($imagen){
+            $this->imagen = $imagen;
+        }
+    }
+
+    public static function getErrores(){
+        return self::$errores;
+    }
+
+    public function validar(){
+
+
+        if(!$this->titulo){
+            self::$errores[] = "Debes añadir un titulo";
+        }
+    
+        if(!$this->precio){
+            self::$errores[] = "Debes añadir un precio";
+        }
+    
+        if(strlen($this->descripcion) < 50){
+            self::$errores[] = "Debes añadir una descripcion de al menos 50 caracteres";
+        }
+    
+        if(!$this->habitaciones){
+            self::$errores[] = "Debes añadir numero de habitaciones";
+        }
+    
+        if(!$this->wc){
+            self::$errores[] = "Debes añadir numero de baños";
+        }
+    
+        if(!$this->estacionamientos){
+            self::$errores[] = "Debes añadir numero de estacionamientos";
+        }
+    
+        if(!$this->id_vendedor){
+            self::$errores[] = "Debes elegir un vendedor";
+        }
+        if (!$this->imagen) {
+            self::$errores[] = "La imagen es obligatoria";
+        }
+
+        return self::$errores;
+    }
+
    
 }
