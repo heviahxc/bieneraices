@@ -36,7 +36,7 @@ class Propiedad{
         $this->wc = $arg['wc'] ?? '';
         $this->estacionamientos = $arg['estacionamientos'] ?? '';
         $this->creado = date('Y/m/d');
-        $this->id_vendedor = $arg['id_vendedor'] ?? '';
+        $this->id_vendedor = $arg['id_vendedor'] ?? 1;
     }
 
     public function save(){
@@ -118,6 +118,44 @@ class Propiedad{
         }
 
         return self::$errores;
+    }
+
+    public static function all(){
+        $query = "SELECT * FROM propiedad;";
+
+        $resultado = self::consultarSQL($query);
+
+        return $resultado;
+
+
+    }
+
+    public static function consultarSQL($query){
+
+        $resultado = self::$db->query($query);
+
+        $array = [];
+        while($registro = $resultado->fetch_assoc()){
+            $array[] = self::crearObjeto($registro);
+        }
+
+        $resultado->free();
+
+        return $array;
+
+    }
+
+    protected static function crearObjeto($registro){
+
+        $objeto = new self;
+
+        foreach($registro as $key => $value){
+            if(property_exists($objeto, $key)){
+                $objeto->$key = $value;
+            }
+        }
+
+        return $objeto;
     }
 
    

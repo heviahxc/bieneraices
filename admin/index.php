@@ -1,18 +1,12 @@
 <?php
-require '../includes/functions.php';
+require '../includes/app.php';
+autenticacion();
 
-$auth = autenticacion();
+use App\Propiedad;
 
-if (!$auth) {
-    header('Location: /');
-}
+$propiedades = Propiedad::all();
 
-require '../includes/config/database.php';
-$db = conectarDB();
 
-//Obtener vendedores
-$query = "SELECT * FROM propiedad";
-$resultadoConsulta = mysqli_query($db, $query);
 $resultado = $_GET['resultado'] ?? null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -63,24 +57,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tr>
         </thead>
         <tbody>
-            <?php while ($propiedad = mysqli_fetch_assoc($resultadoConsulta)): ?>
+            <?php foreach( $propiedades as $propiedad): ?>
             <tr>
-                <td><?php echo $propiedad['id_propiedad']; ?></td>
-                <td><?php echo $propiedad['titulo']; ?></td>
-                <td><img src="/imagenes/<?php echo $propiedad['imagen']; ?>" class="imagen-tabla" alt=""></td>
-                <td><?php echo $propiedad['precio']; ?></td>
+                <td><?php echo $propiedad->id_propiedad; ?></td>
+                <td><?php echo $propiedad->titulo; ?></td>
+                <td><img src="/imagenes/<?php echo $propiedad->imagen; ?>" class="imagen-tabla" alt=""></td>
+                <td><?php echo $propiedad->precio; ?></td>
                 <td>
                     <form method="POST" class="w-100">
 
-                        <input type="hidden" name="id" value="<?php echo $propiedad['id_propiedad']; ?>">
+                        <input type="hidden" name="id" value="<?php echo $propiedad->id_propiedad; ?>">
 
                         <input type="submit" class="button-rojo-block" value="Eliminar">
                     </form>
-                    <a href="admin/propiedades/actualizar.php?id=<?php echo $propiedad['id_propiedad']; ?>"
+                    <a href="admin/propiedades/actualizar.php?id=<?php echo $propiedad->id_propiedad; ?>"
                         class="button-yellow-block">Actualizar</a>
                 </td>
             </tr>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </main>

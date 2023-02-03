@@ -15,3 +15,8 @@ if (!$_SESSION['login']) {
 
 }
 }
+
+function s($html) : string{
+    $s = htmlspecialchars($html);
+    return $s;
+}
