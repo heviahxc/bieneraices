@@ -92,8 +92,7 @@ autenticacion();
         
         move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
        
-        $query = " INSERT INTO propiedad (titulo, precio, imagen, descripcion, habitaciones, wc , estacionamientos, creado, id_vendedor)
-        VALUES ('$title', '$precio','$nombreImagen','$descripcion', '$habitaciones', '$wc', '$estacionamientos', '$creado' ,'$vendedorId')";
+       
     
        // echo $query;
     
