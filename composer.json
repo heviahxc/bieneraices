@@ -1,0 +1,21 @@
+{
+    "name": "hevia/bienesraices",
+    "description": "Bienes Raices POO",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Hevia\\Bienesraices\\": "src/",
+            "App\\":"./class"
+        }
+    },
+    "authors": [
+        {
+            "name": "heviahxc",
+            "email": "heviamc@gmail.com"
+        }
+    ],
+    "require": {
+        "intervention/image": "^2.7"
+    }
+   
+}
